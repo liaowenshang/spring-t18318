@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+       
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+        
+      
+
+					
+		 <!-- <bean id="centrollerCustomer" class="com.edu.centroller.CentrollerCustomer">
+		  <property name="centrolleService" ref="centrolleService"></property>		
+		 </bean>
+		 
+		  <bean id="centrolleService" class="com.edu.service.impl.CentrolleServiceImpl">
+		  <property name="centrolleDao" ref="centrollerDao"></property>		 
+		 </bean>
+		 
+		  <bean id="centrollerDao" class="com.edu.dao.impl.CentrollerDaoImpl"></bean> -->
+		  
+		  
+		  <!-- 把目标对象交给容器 -->
+		  <bean id="calculatorService" class="com.edu.service.CalculatorService"></bean>		
+		  
+		   <bean id="calculatorService2" class="com.edu.service.CalculatorService2"></bean>	
+           <!-- 把我们定义的切面交给容器管理 -->
+           <bean id="calCulatorAOP" class="com.edu.aop.CalCulatorAOP"></bean>
+           
+            <bean id="calCulatorAOP2" class="com.edu.aop.CalCulatorAOP2"></bean>
+            
+            <aop:aspectj-autoproxy />
+             <!-- 要进行aop编程 -->
+             <aop:config>
+               <aop:pointcut expression="execution(public int com.edu.service.CalculatorService.cal(int,int))" id="pt"/>
+                <aop:aspect id="asp" ref="calCulatorAOP">
+                <aop:before method="beforeCal" pointcut-ref="pt"/>
+                
+                <aop:after method="afterCal" pointcut-ref="pt"/>
+                
+                <aop:after-returning method="afterReturing" pointcut-ref="pt"/>
+                
+                <aop:after-throwing method="afterThrowing" pointcut-ref="pt"/>
+                
+                <aop:around method="aroundCal" pointcut-ref="pt"/>
+                
+                </aop:aspect>
+             
+             </aop:config>
+</beans>
